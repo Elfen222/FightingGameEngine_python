@@ -1,0 +1,15 @@
+{
+    "key_config": {
+        "jump"      : "SPACE",
+        "crouch"    : "E",
+        "left"      : "I",
+        "right"     : "A",
+        "low_punch" : "D",
+        "mid_punch" : "H",
+        "high_punch": "F",
+        "low_kick"  : "T",
+        "mid_kick"  : "N",
+        "high_kick" : "S",
+        "start"     : "RETURN"
+    }
+}

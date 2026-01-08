@@ -1,0 +1,170 @@
+{
+    "max_hp": 100,
+    "motion": {
+        "STAND": {
+            "frame_length": 48,
+            "command": [],
+            "holdable": true,
+            "is_loop": true,
+            "layer_frame_step_trigger": [
+                { "frame": 0,  "layer_index": 0, "conditions": [] },
+                { "frame": 11, "layer_index": 1, "conditions": [] },
+                { "frame": 23, "layer_index": 2, "conditions": [] },
+                { "frame": 35, "layer_index": 3, "conditions": [] },
+                { "frame": 47, "layer_index": 4, "conditions": [] }
+            ],
+            "cancelerable_change_motion_trigger": [
+                { "frame": 0, "motion_list": ["ALL"], "conditions": [] }
+            ],
+            "controllable_change_trigger": [
+                { "frame": 0, "controllable": true, "conditions": [] }
+            ],
+            "velocity_change_trigger": [
+                { "frame": 0, "velocity": [0, 0] }
+            ],
+            "hitbox_change_trigger": [
+                {
+                    "frame": 0,
+                    "hitbox_list": [
+                        { "kind": 0, "box_map" : { "start": [-10, -10], "end": [10, 10] } }
+                    ]
+                }
+            ]
+        },
+        "WALK": {
+            "frame_length": 10,
+            "command": ["right"],
+            "holdable": true,
+            "is_loop": true,
+            "layer_frame_step_trigger": [
+                { "frame": 0,  "layer_index": 0 },
+                { "frame": 5,  "layer_index": 1 }
+            ],
+            "cancelerable_change_motion_trigger": [
+                { "frame": 0, "motion_list": ["STAND", "BACK"], "conditions": [] }
+            ],
+            "controllable_change_trigger": [
+                { "frame": 0, "controllable": true, "conditions": [] }
+            ],
+            "velocity_change_trigger": [
+                { "frame": 0, "velocity": [6, 0] }
+            ],
+            "hitbox_change_trigger": [
+                {
+                    "frame": 0,
+                    "hitbox_list": [
+                        { "kind": 0, "box_map" : { "start": [-10, -10], "end": [10, 10] } }
+                    ]
+                }
+            ]
+        },
+        "BACK": {
+            "frame_length": 1,
+            "command": ["left"],
+            "holdable": true,
+            "is_loop": true,
+            "layer_frame_step_trigger": [
+                { "frame": 0,  "layer_index": 0, "conditions": [] }
+            ],
+            "cancelerable_change_motion_trigger": [
+                { "frame": 0, "motion_list": ["STAND", "WALK"], "conditions": [] }
+            ],
+            "controllable_change_trigger": [
+                { "frame": 0, "controllable": true, "conditions": [] }
+            ],
+            "velocity_change_trigger": [
+                { "frame": 0, "velocity": [-8, 0] }
+            ],
+            "hitbox_change_trigger": [
+                {
+                    "frame": 0,
+                    "hitbox_list": [
+                        { "kind": 0, "box_map" : { "start": [-10, -10], "end": [10, 10] } }
+                    ]
+                }
+            ]
+        },
+        "JUMP": {
+            "frame_length": 1,
+            "command": ["jump"],
+            "holdable": true,
+            "is_loop": true,
+            "layer_frame_step_trigger": [
+                { "frame": 0,  "layer_index": 0, "conditions": [] }
+            ],
+            "cancelerable_change_motion_trigger": [
+                { "frame": 0, "motion_list": ["STAND"], "conditions": [] }
+            ],
+            "controllable_change_trigger": [
+                { "frame": 0, "controllable": true, "conditions": [] }
+            ],
+            "velocity_change_trigger": [
+                { "frame": 0, "velocity": [0, -1] }
+            ],
+            "hitbox_change_trigger": [
+                {
+                    "frame": 0,
+                    "hitbox_list": [
+                        { "kind": 0, "box_map" : { "start": [-10, -10], "end": [10, 10] } }
+                    ]
+                }
+            ]
+        },
+        "CROUCH": {
+            "frame_length": 1,
+            "command": ["crouch"],
+            "holdable": true,
+            "is_loop": false,
+            "layer_frame_step_trigger": [
+                { "frame": 0, "layer_index": 0, "conditions": [] },
+                { "frame": 4, "layer_index": 1, "conditions": [] }
+            ],
+            "cancelerable_change_motion_trigger": [
+                { "frame": 0, "motion_list": ["STAND"], "conditions": [] }
+            ],
+            "controllable_change_trigger": [
+                { "frame": 0, "controllable": true, "conditions": [] }
+            ],
+            "velocity_change_trigger": [
+                { "frame": 0, "velocity": [0, 1] }
+            ],
+            "hitbox_change_trigger": [
+                {
+                    "frame": 0,
+                    "hitbox_list": [
+                        { "kind": 0, "box_map" : { "start": [-10, -10], "end": [10, 10] } }
+                    ]
+                }
+            ]
+        },
+        "STAND_LOW_PUNCH": {
+            "frame_length": 13,
+            "command": ["low_punch"],
+            "holdable": false,
+            "is_loop": false,
+            "layer_frame_step_trigger": [
+                { "frame": 0,  "layer_index": 0 },
+                { "frame": 4,  "layer_index": 1 }
+            ],
+            "cancelerable_change_motion_trigger": [
+                { "frame": 0, "motion_list": ["STAND"], "conditions": [] }
+            ],
+            "controllable_change_trigger": [
+                { "frame": 0, "controllable": false, "conditions": [] }
+            ],
+            "velocity_change_trigger": [
+                { "frame": 0, "velocity": [0, 0] },
+                { "frame": 6, "velocity": [-2, 0] },
+                { "frame": 7, "velocity": [0, 0] }
+            ],
+            "hitbox_change_trigger": [
+                {
+                    "frame": 0,
+                    "hitbox_list": [
+                        { "kind": 0, "box_map" : { "start": [-10, -10], "end": [10, 10] } }
+                    ]
+                }
+            ]
+        }
+    }
+}

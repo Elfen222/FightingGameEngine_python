@@ -1,0 +1,8 @@
+{
+    "stage_size": [640, 400],
+    "floor_height": 0,
+    "image_file_name_list": [
+        "background.gif",
+        "floor.gif"
+    ]
+}
