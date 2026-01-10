@@ -5,6 +5,8 @@ from data.runtime.entity import Entity
 from defs.character import Character
 from defs.motion import MotionKind
 from defs.stage import Stage
+from defs.motion import Motion
+from data.types.position import Position
 from collaborator.battle_collaborator import BattleCollaborator
 
 
@@ -33,9 +35,11 @@ class BattleLogic:
             # 1.入力履歴からコマンド判定を行う
             # 2.コマンドが成立する場合、モーションを変更させ、それに応じてキャラクターの状態を変更させる。
             self.__update_motion(entity)
-            motion = entity.get_now_motion()
-            entity.get_position().x += motion.get_velocity(entity.get_state_frame_idx()).x
-            entity.get_position().y += motion.get_velocity(entity.get_state_frame_idx()).y
+            motion: Motion = entity.get_now_motion()
+            # エンティティの位置更新
+            new_position: Position = entity.get_position() + motion.get_velocity(entity.get_state_frame_idx())
+            self.__fix_position_over(new_position)
+            entity.set_position(new_position)
 
         return BattleCollaborator(
             tuple(self.__entity_list),
@@ -78,17 +82,19 @@ class BattleLogic:
 
         return "STAND"
 
-    def __fix_position_over__(self, entity: Entity) -> None:
+    # ----------------------------------------------
+    # エンティティ操作用の関数群
+    # ----------------------------------------------
+    def __fix_position_over(self, position: Position) -> None:
         """
         ポジションを修正する
         """
         floor_height = self.__stage.get_height() - self.__stage.get_floor_height()
-        if entity.get_position().x < 0:
-            entity.get_position().x = 0
-        if entity.get_position().x > self.__stage.get_width():
-            entity.get_position().x = self.__stage.get_width()
-        if entity.get_position().y < 0:
-            entity.get_position().y = 0
-        if entity.get_position().y > floor_height:
-            entity.get_position().y = floor_height
-            entity.__accelaration = 0
+        if position.x < 0:
+            position.x = 0
+        if position.x > self.__stage.get_width():
+            position.x = self.__stage.get_width()
+        if position.y < 0:
+            position.y = 0
+        if position.y > floor_height:
+            position.y = floor_height
