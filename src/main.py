@@ -24,7 +24,7 @@ Stage = stage_list.STAGE_LIST['SeaStage']
 
 # エンティティの呼び出し
 EntityList: list[Entity] = []
-entity = Entity('testCharacter', True)
+entity = Entity('TestCharacter', True)
 entity.set_position(Position(Stage.get_width() // 2, Stage.get_height() - Stage.get_floor_height()))
 EntityList.append(entity)
 
