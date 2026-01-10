@@ -33,8 +33,8 @@ class BattleView(AbstractView):
         """
         描画処理
         """
-        entity_list: list[Entity] = self.__collaborator.entity_list
-        input_history: list[InputHistory] = self.__collaborator.input_history
+        entity_list: tuple[Entity] = self.__collaborator.entity_list
+        input_history: tuple[InputHistory] = self.__collaborator.input_history
 
         super().draw()
 

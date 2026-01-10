@@ -3,7 +3,7 @@ from data.types.input_history import InputHistory
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class BattleCollaborator:
-    entity_list: list[Entity]
-    input_history: list[InputHistory]
+    entity_list: tuple[Entity, ...]
+    input_history: tuple[InputHistory, ...]

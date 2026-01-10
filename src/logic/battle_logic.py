@@ -10,8 +10,8 @@ from collaborator.battle_collaborator import BattleCollaborator
 
 class BattleLogic:
     def __init__(self, entity_list: list[Entity], stage: Stage) -> None:
-        self.__entity_list = entity_list
-        self.__stage = stage
+        self.__entity_list: list[Entity] = entity_list
+        self.__stage: Stage = stage
         self.__left_move_flg: bool = False
         self.__right_move_flg: bool = False
 
@@ -38,9 +38,8 @@ class BattleLogic:
             entity.get_position().y += motion.get_velocity(entity.get_state_frame_idx()).y
 
         return BattleCollaborator(
-            # ディープコピーにする必要はあまりないが、安全策として
-            deepcopy(self.__entity_list),
-            deepcopy(self.__input_history),
+            tuple(self.__entity_list),
+            tuple(self.__input_history),
         )
 
     # コマンド判定用の関数群
