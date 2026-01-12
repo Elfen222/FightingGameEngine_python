@@ -101,6 +101,16 @@ class Character:
         """
         return self.__motion_dict[motion_kind]
 
+    def has_motion(self, motion_kind: MotionKind) -> bool:
+        """
+        キャラクターが指定されたモーションを持っているかどうかを取得
+        Args:
+            motion_kind (MotionKind): モーションの種類
+        Returns:
+            bool: 指定されたモーションを持っているかどうか
+        """
+        return motion_kind in self.__motion_dict
+
     def get_holdable_dict(self) -> dict[MotionKind, bool]:
         """
         キャラクターの各モーションのホールド可能フラグ辞書を取得

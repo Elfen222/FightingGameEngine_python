@@ -20,6 +20,9 @@ class BattleLogic:
         self.__input_history: list[InputHistory] = []
 
     def calc(self, key_input: KeyInput) -> BattleCollaborator:
+        """
+        バトル画面の計算を行う。
+        """
         # 入力履歴の保存
         if (len(self.__input_history) == 0 or
                 self.__input_history[-1].keyInput != key_input):
@@ -29,12 +32,12 @@ class BattleLogic:
         elif self.__input_history[-1].frameCount < 99:
             self.__input_history[-1].frameCount += 1
 
-        # 入力処理
+        # エンティティの更新
         for entity in self.__entity_list:
             # TODO:将来的にどう動かすかは要検討
             # 1.入力履歴からコマンド判定を行う
             # 2.コマンドが成立する場合、モーションを変更させ、それに応じてキャラクターの状態を変更させる。
-            self.__update_motion(entity)
+            self.__update_state(entity)
             motion: Motion = entity.get_now_motion()
             # エンティティの位置更新
             new_position: Position = entity.get_position() + motion.get_velocity(entity.get_state_frame_idx())
@@ -46,18 +49,32 @@ class BattleLogic:
             tuple(self.__input_history),
         )
 
+    # ----------------------------------------------
     # コマンド判定用の関数群
-    def __update_motion(self, entity: Entity) -> None:
+    # ----------------------------------------------
+    def __update_state(self, entity: Entity) -> None:
         character: Character = entity.get_character()
         command_dict = character.get_command_dict()
         holdable_dict = character.get_holdable_dict()
 
+        # コマンド判定
         motion_kind: MotionKind
-        if entity.is_controllable() is False:
-            motion_kind = entity.get_motion_kind()
-        else:
+        if entity.is_controllable():
             motion_kind = self.__judge_command(command_dict, holdable_dict)
-        entity.update_state(motion_kind)
+        else:
+            motion_kind = entity.get_motion_kind()
+
+        # 状態が変化した場合、
+        # またはホールド可能なモーションの最後のフレームに到達した場合、状態をリセット
+        if (entity.get_motion_kind() != motion_kind or
+            (entity.get_now_motion().is_holdable() and entity.is_end_of_motion())):
+            entity.reset_state_index()
+            entity.set_state(motion_kind)
+        elif entity.is_end_of_motion():
+            entity.set_state("STAND")
+        else:
+            entity.increment_state_index()
+        pass
 
     def __judge_command(self, command_dict: dict[MotionKind, list[int]],
                         holdable_dict: dict[MotionKind, bool]) -> MotionKind:

@@ -36,37 +36,24 @@ class Entity:
         """
         self.__side = side
 
-    def update_state(self, motion_kind: str) -> None:
+    def set_state(self, motion_kind: MotionKind) -> None:
         """
-        キャラクターの状態を更新
-        現在の状態と異なる場合、状態フレームインデックスをリセット
-
+        キャラクターの状態を設定
         Args:
             state (str): 状態
         """
-        #ic("{} -> {}".format(self.__motion_kind, motion_kind))
-        #ic(self.__is_end_of_motion())
-        if (self.__motion_kind != motion_kind or
-            (self.get_now_motion().is_holdable() and self.__is_end_of_motion())):
-            # 状態が変化した場合、
-            # またはホールド可能なモーションの最後のフレームに到達した場合、状態をリセット
-            self.__reset_state(motion_kind)
-        elif self.__is_end_of_motion():
-            #ic("STANDにリセット")
-            self.__reset_state("STAND")
-        else:
-            self.__count_state_index()
+        if self.__character.has_motion(motion_kind) is False:
+            raise ValueError(f"Character don't has motion: {motion_kind}")
 
-    def __reset_state(self, motion_kind: str) -> None:
-        """
-        キャラクターの状態を更新し、状態フレームインデックスをリセット
-        Args:
-            state (str): 状態
-        """
-        self.__state_frame_idx = 0
         self.__motion_kind = motion_kind
 
-    def __count_state_index(self) -> None:
+    def reset_state_index(self) -> None:
+        """
+        キャラクターの状態フレームインデックスをリセット
+        """
+        self.__state_frame_idx = 0
+
+    def increment_state_index(self) -> None:
         """
         キャラクターの状態フレームインデックスをインクリメント
         """
@@ -74,11 +61,11 @@ class Entity:
         if self.__state_frame_idx >= self.get_now_motion().get_frame_length():
             self.__state_frame_idx = 0
 
-    def __is_end_of_motion(self) -> bool:
+    def is_end_of_motion(self) -> bool:
         """モーションの最後のフレームに到達したかどうかを判定"""
         return self.__state_frame_idx == self.get_now_motion().get_frame_length() - 1
 
-    def get_position(self):
+    def get_position(self) -> Position:
         """
         キャラクターの位置を取得
         Returns:
