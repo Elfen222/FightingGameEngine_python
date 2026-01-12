@@ -33,8 +33,8 @@ class BattleView(AbstractView):
         """
         描画処理
         """
-        entity_list: tuple[Entity] = self.__collaborator.entity_list
-        input_history: tuple[InputHistory] = self.__collaborator.input_history
+        entity_list: tuple[Entity, ...] = self.__collaborator.entity_list
+        input_history: tuple[InputHistory, ...] = self.__collaborator.input_history
 
         super().draw()
 
@@ -73,9 +73,11 @@ class BattleView(AbstractView):
         # 2. ステージの端
         # 3. 超必殺技の演出時
         # 4. KO時
-        camera_position: Position = entity_list[0].get_position()
-        camera_position.x = min(max(0, camera_position.x), self.__stage.get_width() // 2)
-        camera_position.y = min(max(0, camera_position.y), self.__stage.get_height() // 2)
+        entity_pos = entity_list[0].get_position()
+        camera_position: Position = Position(
+            min(max(0, entity_pos.x), self.__stage.get_width() // 2),
+            min(max(0, entity_pos.y), self.__stage.get_height() // 2)
+        )
         camera = Camera(camera_position, 320, 200)
         ic(camera.position.to_tuple())
         ic(camera)
